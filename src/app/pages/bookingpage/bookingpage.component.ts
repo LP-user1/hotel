@@ -138,12 +138,14 @@ export class BookingpageComponent implements OnInit {
           .then((res: any) => {
             console.log(res);
             if (res) {
+              document.getElementById('closeModal')?.click();
               this.isAlert = true;
               this.alertTitle = 'Success';
               this.alertMsg = 'Your booking has been confirmed.';
             }
           })
-          .catch((err) => {
+          .catch((err:any) => {
+            document.getElementById('closeModal')?.click();
             this.isAlert = true;
             this.alertTitle = 'Error';
             this.alertMsg = err.message;

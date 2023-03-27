@@ -93,6 +93,7 @@
       <button
         type="button"
         class="loginBtn"
+        name="login_btn"
         data-bs-toggle="modal"
         data-bs-target="#staticBackdrop"
         *ngIf="!isLoggedin"
@@ -102,6 +103,7 @@
       <button
         type="button"
         class="loginBtn"
+        name="logout_btn"
         (click)="logoutUser()"
         *ngIf="isLoggedin"
       >
@@ -110,6 +112,7 @@
       <button
         class="navbar-toggler shadow-none border-0"
         type="button"
+        name="menu_btn"
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasExample"
         aria-controls="offcanvasExample"
@@ -131,6 +134,7 @@
     <button
       type="button"
       class="btn-close"
+      name="menu close"
       data-bs-dismiss="offcanvas"
       aria-label="Close"
     ></button>
@@ -345,6 +349,7 @@
           <div class="d-flex">
             <button
               type="submit"
+              name="signup_btn"
               class="btn btn-primary w-75 mx-auto"
               [disabled]="!signUpForm.valid"
             >
@@ -400,6 +405,7 @@
           <div class="d-flex">
             <button
               type="submit"
+              name="signin_btn"
               class="btn btn-primary w-75 mx-auto"
               [disabled]="!loginForm.valid"
             >
@@ -413,6 +419,7 @@
           Don't have an account?
           <a
             class="text-primary text-decoration-underline"
+            title="signup form"
             (click)="loginToggle()"
             >Signup</a
           >
@@ -421,6 +428,7 @@
           Already have an account?
           <a
             class="text-primary text-decoration-underline"
+            title="signin form"
             (click)="loginToggle()"
             >Signin</a
           >
