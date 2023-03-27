@@ -1,0 +1,445 @@
+<!-- Nav Bar -->
+<nav
+  class="navbar navbar-expand-md bg-white"
+  [class.sticky-top]="navSticky"
+  [class.shadow]="navSticky"
+>
+  <div class="container-fluid px-md-4 px-lg-5">
+    <a
+      class="navbar-brand d-flex align-items-md-center justify-content-md-center align-items-center justify-content-flexstart"
+      routerLink="/"
+      title="LP-Hotel | Home"
+    >
+      <img
+        src="https://lp-user1.github.io/assets/favicon-256(1).png"
+        class="me-1"
+        alt="logo"
+        width="30px"
+        height="30px"
+      />
+      Hotel
+    </a>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mb-2 mb-lg-0 mx-md-auto">
+        <li class="nav-item me-md-2 me-lg-3">
+          <a
+            class="nav-link"
+            [routerLink]="['/']"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            aria-current="page"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item me-md-2 me-lg-3">
+          <a
+            class="nav-link"
+            [routerLink]="['/booking-room']"
+            routerLinkActive="active"
+            >Booking</a
+          >
+        </li>
+        <li class="nav-item me-md-2 me-lg-3">
+          <a
+            class="nav-link"
+            [routerLink]="['/contact']"
+            routerLinkActive="active"
+            >Contact</a
+          >
+        </li>
+        <li class="nav-item me-md-2 me-lg-3">
+          <a
+            class="nav-link"
+            [routerLink]="['/about']"
+            routerLinkActive="active"
+            >About</a
+          >
+        </li>
+        <li class="nav-item dropdown me-md-2 me-lg-3">
+          <a
+            class="nav-link roomBtn dropdown-toggle"
+            routerLinkActive="active"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Rooms
+          </a>
+          <ul class="dropdown-menu">
+            <li *ngFor="let item of allRooms">
+              <a
+                class="dropdown-item"
+                [routerLink]="[item.url]"
+                routerLinkActive="active"
+                >{{ item.roomsType }}</a
+              >
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item me-0 me-lg-0">
+          <a
+            class="nav-link"
+            [routerLink]="['/request-quote']"
+            routerLinkActive="active"
+            >Request Quote</a
+          >
+        </li>
+      </ul>
+    </div>
+    <div
+      class="d-flex align-items-md-center justify-content-md-center align-items-center justify-content-flexend"
+    >
+      <!-- Modal Trigger -->
+      <button
+        type="button"
+        class="loginBtn"
+        data-bs-toggle="modal"
+        data-bs-target="#staticBackdrop"
+        *ngIf="!isLoggedin"
+      >
+        Login
+      </button>
+      <button
+        type="button"
+        class="loginBtn"
+        (click)="logoutUser()"
+        *ngIf="isLoggedin"
+      >
+        Logout
+      </button>
+      <button
+        class="navbar-toggler shadow-none border-0"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasExample"
+        aria-controls="offcanvasExample"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<!-- OFF Canvas -->
+<div
+  class="offcanvas offcanvas-end"
+  tabindex="-1"
+  id="offcanvasExample"
+  aria-labelledby="offcanvasExampleLabel"
+>
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menu</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="navbar-nav mb-3 text-center">
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [routerLink]="['/']"
+          routerLinkActive="active"
+          aria-current="page"
+          data-bs-dismiss="offcanvas"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Home</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [routerLink]="['/booking-room']"
+          routerLinkActive="active"
+          data-bs-dismiss="offcanvas"
+          >Booking</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [routerLink]="['/contact']"
+          routerLinkActive="active"
+          data-bs-dismiss="offcanvas"
+          >Contact</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [routerLink]="['/about']"
+          routerLinkActive="active"
+          data-bs-dismiss="offcanvas"
+          >About</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          [routerLink]="['/request-quote']"
+          routerLinkActive="active"
+          data-bs-dismiss="offcanvas"
+          >Request Quote</a
+        >
+      </li>
+      <li class="nav-item dropdown">
+        <div class="dropdown-center">
+          <a
+            class="nav-link dropdown-toggle"
+            routerLinkActive="active"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Rooms
+          </a>
+          <ul class="dropdown-menu text-center mx-auto">
+            <li *ngFor="let item of allRooms">
+              <a
+                class="dropdown-item"
+                [routerLink]="[item.url]"
+                routerLinkActive="active"
+                data-bs-dismiss="offcanvas"
+                >{{ item.roomsType }}</a
+              >
+            </li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1
+          class="modal-title fs-5"
+          id="staticBackdropLabel"
+          *ngIf="loginFormActive"
+        >
+          Sign In
+        </h1>
+        <h1
+          class="modal-title fs-5"
+          id="staticBackdropLabel"
+          *ngIf="!loginFormActive"
+        >
+          Sign Up
+        </h1>
+        <button
+          id="modalClose"
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- spinner -->
+        <div class="text-center mt-2" *ngIf="isLoading">
+          <div class="spinner-border text-center" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        <!-- Modal msg -->
+
+        <div class="col-12 p-2 mt-2" *ngIf="modalMsg">
+          <p class="fs-5 text-center {{ modalMsgType }}">{{ modalMsg }}</p>
+        </div>
+        <!-- Sign up form -->
+        <form
+          class="p-4"
+          *ngIf="!loginFormActive"
+          [formGroup]="signUpForm"
+          (ngSubmit)="signUpFormSubmit()"
+        >
+          <!-- <div class="mb-3">
+            <label for="name" class="form-label"
+              >Name
+              <span
+                class="text-danger"
+                *ngIf="name?.invalid && (name?.dirty || name?.touched)"
+                ><small>*</small></span
+              ></label
+            >
+            <input
+              type="text"
+              class="form-control shadow-none"
+              formControlName="name"
+              [class.is-invalid]="
+                name?.invalid && (name?.dirty || name?.touched)
+              "
+              id="name"
+              placeholder="Name"
+              autocomplete="off"
+            />
+          </div> -->
+          <div class="mb-3">
+            <label for="email" class="form-label"
+              >Email
+              <span class="text-danger" *ngIf="semail?.errors?.['email']"
+                ><small>* enter valid Email</small></span
+              ></label
+            >
+            <input
+              type="email"
+              class="form-control shadow-none"
+              formControlName="email"
+              [class.is-invalid]="
+                semail?.invalid && (semail?.dirty || semail?.touched)
+              "
+              id="email"
+              placeholder="email@example.com"
+              autocomplete="off"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label"
+              >Password
+              <span class="text-danger" *ngIf="spassword?.errors?.['minlength']"
+                ><small>* password must in 8 characters</small></span
+              ></label
+            >
+            <input
+              type="password"
+              class="form-control shadow-none"
+              formControlName="password"
+              [class.is-invalid]="
+                spassword?.invalid && (spassword?.dirty || spassword?.touched)
+              "
+              id="password"
+              placeholder="Password"
+              autocomplete="off"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="confpassword" class="form-label"
+              >Confirm Password</label
+            >
+            <input
+              type="password"
+              class="form-control shadow-none"
+              formControlName="confpassword"
+              [class.is-invalid]="
+                confpassword?.invalid &&
+                (confpassword?.dirty || confpassword?.touched)
+              "
+              id="confpassword"
+              placeholder="Confirm Password"
+              autocomplete="off"
+            />
+          </div>
+          <div class="d-flex">
+            <button
+              type="submit"
+              class="btn btn-primary w-75 mx-auto"
+              [disabled]="!signUpForm.valid"
+            >
+              Sign Up
+            </button>
+          </div>
+        </form>
+        <!-- Login Form -->
+        <form
+          class="p-4"
+          *ngIf="loginFormActive"
+          [formGroup]="loginForm"
+          (ngSubmit)="loginFormSubmit()"
+        >
+          <div class="mb-3">
+            <label for="email" class="form-label"
+              >Email
+              <span class="text-danger" *ngIf="email?.errors?.['email']"
+                ><small>* enter valid Email</small></span
+              ></label
+            >
+            <input
+              type="email"
+              class="form-control shadow-none"
+              formControlName="email"
+              [class.is-invalid]="
+                email?.invalid && (email?.dirty || email?.touched)
+              "
+              id="email"
+              placeholder="email@example.com"
+              autocomplete="off"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label"
+              >Password
+              <span class="text-danger" *ngIf="password?.errors?.['minlength']"
+                ><small>* password must in 8 characters</small></span
+              ></label
+            >
+            <input
+              type="password"
+              class="form-control shadow-none"
+              formControlName="password"
+              [class.is-invalid]="
+                password?.invalid && (password?.dirty || password?.touched)
+              "
+              id="password"
+              placeholder="Password"
+              autocomplete="off"
+            />
+          </div>
+          <div class="d-flex">
+            <button
+              type="submit"
+              class="btn btn-primary w-75 mx-auto"
+              [disabled]="!loginForm.valid"
+            >
+              Sign in
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <p class="mx-auto" *ngIf="loginFormActive">
+          Don't have an account?
+          <a
+            class="text-primary text-decoration-underline"
+            (click)="loginToggle()"
+            >Signup</a
+          >
+        </p>
+        <p class="mx-auto" *ngIf="!loginFormActive">
+          Already have an account?
+          <a
+            class="text-primary text-decoration-underline"
+            (click)="loginToggle()"
+            >Signin</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Alert -->
+<div class="col-12 px-3 col-md-6 mx-auto fixed-top mt-4">
+  <div
+    class="alert alert-warning alert-dismissible fade show"
+    role="alert"
+    tabindex="-1"
+    *ngIf="isAlert"
+  >
+    <strong>{{ alertTitle }}</strong
+    ><span class="w-100 text-center"> {{ alertMsg }}</span>
+    <button type="button" class="btn-close" (click)="alertDismiss()"></button>
+  </div>
+</div>

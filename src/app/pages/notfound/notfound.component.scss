@@ -1,0 +1,23 @@
+.notFound-outer {
+  height: 85vh;
+  background: rgb(248, 112, 248);
+  background: linear-gradient(
+    65deg,
+    rgba(248, 112, 248, 1) 0%,
+    rgba(90, 0, 156, 1) 100%
+  );
+  .notFound-banner {
+    // background: linear-gradient(
+    //   65deg,
+    //   rgba(36, 36, 36, 0.393) 0%,
+    //   rgba(36, 36, 36, 0.13) 100%
+    // );
+    background: rgba(255, 255, 255, 0.16);
+    border-radius: 16px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+  a {
+    transition: 200ms !important;
+  }
+}

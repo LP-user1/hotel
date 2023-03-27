@@ -1,0 +1,23 @@
+.popup {
+  .col-12 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+div.container-fluid {
+  div.row-banner {
+    background: linear-gradient(
+        to right,
+        rgba(39, 37, 37, 0.34),
+        rgba(17, 17, 17, 0.379)
+      ),
+      url("^assets/home_page_banner.jpg");
+    min-height: 80vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden !important;
+    border-radius: 0 0 0.4rem 0.4rem;
+  }
+}

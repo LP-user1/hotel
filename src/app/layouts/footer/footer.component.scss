@@ -1,0 +1,18 @@
+a {
+  text-decoration: none;
+  font-size: 1rem !important;
+}
+
+ul > li > svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: #fff !important;
+  background-color: #fff !important;
+  border-radius: 50%;
+  padding: 0.2rem;
+  transition: 200ms;
+  cursor: pointer;
+  &:hover {
+    background-color: #ffffff94 !important;
+  }
+}

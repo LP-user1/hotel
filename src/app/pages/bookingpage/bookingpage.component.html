@@ -1,0 +1,745 @@
+<!-- Booking Banner -->
+<div class="bg-white px-2 px-md-3 px-lg-4 px-xl-5 py-2 py-md-3">
+  <div class="container-fluid booking-outer text-white">
+    <div
+      class="row booking-banner shadow d-flex justify-content-center rounded-4 align-items-center"
+    >
+      <div class="col-12">
+        <p class="display-1 text-center">Book Your Room</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Booking Content -->
+<div class="bg-white px-2 px-md-3 px-lg-4 px-xl-5 py-2 py-md-3">
+  <div class="container-fluid bg-light">
+    <div class="row">
+      <!-- Search Field Leftside -->
+      <div class="col-12 col-md-4 mb-4 mt-3 py-4 bg-white">
+        <div class="row">
+          <h2 class="fw-light mb-3 text-center">Search Room Availability</h2>
+          <div class="col-12 mb-2">
+            <!-- Room Types -->
+            <h4 class="mb-2">Room Type</h4>
+            <div class="form-check form-switch ms-3 mb-2">
+              <input
+                class="form-check-input"
+                type="radio"
+                role="switch"
+                name="roomtype"
+                (change)="onRadioChange($event)"
+                id="single"
+                value="single"
+                checked
+              />
+              <label class="form-check-label" for="single"
+                >Single Bedroom</label
+              >
+            </div>
+            <div class="form-check form-switch ms-3 mb-2">
+              <input
+                class="form-check-input"
+                type="radio"
+                role="switch"
+                name="roomtype"
+                (change)="onRadioChange($event)"
+                value="double"
+                id="double"
+              />
+              <label class="form-check-label" for="double"
+                >Double Bedroom</label
+              >
+            </div>
+            <div class="form-check form-switch ms-3 mb-2">
+              <input
+                class="form-check-input"
+                type="radio"
+                role="switch"
+                name="roomtype"
+                (change)="onRadioChange($event)"
+                value="luxury"
+                id="luxury"
+              />
+              <label class="form-check-label" for="luxury"
+                >Luxury Bedroom</label
+              >
+            </div>
+            <div class="form-check form-switch ms-3 mb-2">
+              <input
+                class="form-check-input"
+                type="radio"
+                role="switch"
+                name="roomtype"
+                (change)="onRadioChange($event)"
+                value="deluxe"
+                id="deluxe"
+              />
+              <label class="form-check-label" for="deluxe"
+                >Deluxe Bedroom</label
+              >
+            </div>
+          </div>
+          <!-- Check in and Out -->
+          <div
+            class="col-12 mt-3 mb-3 d-flex justify-content-between gap-2 align-items-center"
+          >
+            <div class="col">
+              <h4 class="mb-2">Check In</h4>
+              <input
+                type="date"
+                class="form-control"
+                name="checkinout"
+                id="Checkin"
+                min="{{ todayDate }}"
+                (change)="checkinDatePicker($event)"
+              />
+            </div>
+            <div class="col">
+              <h4 class="mb-2">Check Out</h4>
+              <input
+                type="date"
+                class="form-control"
+                [readonly]="!isEnableDate"
+                name="checkinout"
+                id="Checkout"
+                (click)="checkoutAlert()"
+                min="{{ todayDate }}"
+                (change)="checkoutDatePicker($event)"
+              />
+            </div>
+          </div>
+          <!-- Room Count -->
+          <div class="col-12 mb-3">
+            <h4 class="mb-3">Room</h4>
+            <div class="input-group mb-3">
+              <button
+                class="btn btn-dark"
+                role="button"
+                (click)="roomCountDecre()"
+                [disabled]="roomCount == 1"
+              >
+                -
+              </button>
+              <input
+                type="text"
+                class="form-control text-center border-0 shadow-none"
+                [(ngModel)]="roomCount"
+                value="{{ roomCount }}"
+                style="max-width: 40% !important"
+              />
+              <button
+                class="btn btn-dark"
+                role="button"
+                (click)="roomCountIncre()"
+                [disabled]="roomCount == 5"
+              >
+                +
+              </button>
+            </div>
+          </div>
+          <!-- Price -->
+          <div class="col-12 mb-3">
+            <h4 class="mb-3">Price</h4>
+            <div
+              class="d-flex mb-2 justify-content-start gap-3 align-items-center"
+            >
+              <div class="form-check form-switch ms-3 mb-2">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  role="switch"
+                  name="priceRad"
+                  (change)="priceRadioChange($event)"
+                  id="under"
+                  value="under"
+                  checked
+                />
+                <label class="form-check-label" for="under">Under</label>
+              </div>
+              <div class="form-check form-switch ms-3 mb-2">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  role="switch"
+                  name="priceRad"
+                  (change)="priceRadioChange($event)"
+                  id="above"
+                  value="above"
+                />
+                <label class="form-check-label" for="above">Above</label>
+              </div>
+            </div>
+            <input
+              type="text"
+              class="form-contorl shadow-none w-50"
+              [(ngModel)]="price"
+            />
+          </div>
+          <!-- Guest -->
+          <div class="col-12 mb-3">
+            <h4 class="mb-3">Guests</h4>
+            <div
+              class="accordion rounded-4 border-1 border-secondary"
+              id="accordionFlushExample"
+            >
+              <div class="accordion-item bg-light">
+                <h2 class="accordion-header" id="flush-headingOne">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne"
+                    aria-expanded="false"
+                    aria-controls="flush-collapseOne"
+                  >
+                    <span
+                      class="d-flex justify-content-between align-items-center w-75"
+                    >
+                      <span class="">Adult {{ adultsCount }}</span>
+                      <span class="">Childrens {{ childrensCount }}</span>
+                    </span>
+                  </button>
+                </h2>
+                <div
+                  id="flush-collapseOne"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="flush-headingOne"
+                  data-bs-parent="#accordionFlushExample"
+                >
+                  <div class="accordion-body">
+                    <h5 class="fw-light">Adult</h5>
+                    <div
+                      class="input-group mb-3 px-3 d-flex justify-content-center align-items-center"
+                    >
+                      <button
+                        class="btn btn-dark"
+                        role="button"
+                        (click)="adultDecre()"
+                        [disabled]="adultsCount == 1"
+                      >
+                        -
+                      </button>
+                      <input
+                        type="text"
+                        class="form-control text-center border-0 shadow-none"
+                        value="{{ adultsCount }}"
+                        [(ngModel)]="adultsCount"
+                        style="max-width: 40% !important"
+                      />
+                      <button
+                        class="btn btn-dark"
+                        role="button"
+                        (click)="adultIncre()"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <h5 class="fw-light">Childrens</h5>
+                    <div
+                      class="input-group mb-3 px-3 d-flex justify-content-center align-items-center"
+                    >
+                      <button
+                        class="btn btn-dark"
+                        role="button"
+                        (click)="childrenDecre()"
+                        [disabled]="childrensCount < 1"
+                      >
+                        -
+                      </button>
+                      <input
+                        type="text"
+                        class="form-control text-center border-0 shadow-none"
+                        value="{{ childrensCount }}"
+                        [(ngModel)]="childrensCount"
+                        style="max-width: 40% !important"
+                      />
+                      <button
+                        class="btn btn-dark"
+                        role="button"
+                        (click)="childrenIncre()"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <div
+                      class="d-flex px-3 mt-3 justify-content-center align-items-center"
+                    >
+                      <button
+                        class="btn btn-danger w-50 mt-4"
+                        role="button"
+                        (click)="clearAll()"
+                        [disabled]="adultsCount < 2 && childrensCount == 0"
+                      >
+                        Clear All
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="d-flex justify-content-center align-items-center w-100">
+            <button
+              class="btn btn-warning py-1 bg-gradient w-75 border-0 shadow-none"
+              (click)="getFilter()"
+              [disabled]="
+                !roomtype || !roomCount || !price || !checkIn || !checkOut
+              "
+            >
+              Search
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Result Field Rightside -->
+      <div class="col-12 col-md-8 py-4 mt-3 mb-3 mt-md-0">
+        <!-- Default ShowCase Data -->
+        <div class="col-12" *ngIf="!isLoading && showcase && !isError">
+          <h2 class="fw-light mb-3 text-center">Some of our Rooms</h2>
+          <div class="col-12 mb-3 mx-auto" *ngFor="let item of showcaseData">
+            <div class="card mb-3 shadow">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img
+                    ngSrc="{{ item.imgUrl }}"
+                    class="img rounded-start"
+                    width="500"
+                    height="500"
+                    alt="single_bed"
+                    style="object-fit: cover; width: 100%; height: 100%"
+                    priority
+                  />
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ item.roomName }}</h5>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <p class="card-text mb-0 mt-0 p-0">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="ionicon"
+                          viewBox="0 0 512 512"
+                        >
+                          <title>People</title>
+                          <path
+                            d="M402 168c-2.93 40.67-33.1 72-66 72s-63.12-31.32-66-72c-3-42.31 26.37-72 66-72s69 30.46 66 72z"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="32"
+                          />
+                          <path
+                            d="M336 304c-65.17 0-127.84 32.37-143.54 95.41-2.08 8.34 3.15 16.59 11.72 16.59h263.65c8.57 0 13.77-8.25 11.72-16.59C463.85 335.36 401.18 304 336 304z"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-miterlimit="10"
+                            stroke-width="32"
+                          />
+                          <path
+                            d="M200 185.94c-2.34 32.48-26.72 58.06-53 58.06s-50.7-25.57-53-58.06C91.61 152.15 115.34 128 147 128s55.39 24.77 53 57.94z"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="32"
+                          />
+                          <path
+                            d="M206 306c-18.05-8.27-37.93-11.45-59-11.45-52 0-102.1 25.85-114.65 76.2-1.65 6.66 2.53 13.25 9.37 13.25H154"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-miterlimit="10"
+                            stroke-width="32"
+                          />
+                        </svg>
+                        {{ item.guest }} Guests
+                      </p>
+                      <p class="card-text mb-0 mt-0 p-0">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="ionicon"
+                          viewBox="0 0 512 512"
+                        >
+                          <title>Bed</title>
+                          <path
+                            d="M384 240H96V136a40.12 40.12 0 0140-40h240a40.12 40.12 0 0140 40v104zM48 416V304a64.19 64.19 0 0164-64h288a64.19 64.19 0 0164 64v112"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="32"
+                          />
+                          <path
+                            d="M48 416v-8a24.07 24.07 0 0124-24h368a24.07 24.07 0 0124 24v8M112 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16M256 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="32"
+                          />
+                        </svg>
+                        {{ item.bed }} {{ item.roomType | titlecase }} bed
+                      </p>
+                    </div>
+                    <div
+                      class="d-flex justify-content-between align-items-center mt-2 mb-2"
+                    >
+                      <p
+                        class="card-text mb-0 mt-0 p-0 text-decoration-line-through text-opacity-75 text-secondary"
+                      >
+                        {{ item.normalRent | currency : "INR" : "symbol" }}
+                      </p>
+                      <p class="card-text mb-0 mt-0 p-0">
+                        {{ item.offRent | currency : "INR" : "symbol" }}
+                        / night
+                      </p>
+                    </div>
+                    <div class="d-flex px-3">
+                      <button
+                        class="btn btn-dark bg-gradient mx-auto w-75"
+                        data-bs-toggle="modal"
+                        data-bs-target="#detailModal"
+                        (click)="getRoomDetails(item.id)"
+                      >
+                        Get Details
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Data Can be visible when user search -->
+        <div class="col-12" *ngIf="!isLoading && !showcase && !isError">
+          <h2 class="fw-light mb-3 text-center">
+            Your Search Result for {{ roomtype | titlecase }} Bedroom
+          </h2>
+          <div class="col-12 mb-3 mx-auto" *ngFor="let item of filteredData">
+            <div class="card mb-3 shadow">
+              <div class="row g-0">
+                <div class="col-md-4">
+                  <img
+                    ngSrc="{{ item.imgUrl }}"
+                    class="img rounded-start"
+                    width="500"
+                    height="500"
+                    alt="single_bed"
+                    style="object-fit: cover; width: 100%; height: 100%"
+                    priority
+                  />
+                </div>
+                <div class="col-md-8">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ item.roomName }}</h5>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <p class="card-text mb-0 mt-0 p-0">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="ionicon"
+                          viewBox="0 0 512 512"
+                        >
+                          <title>People</title>
+                          <path
+                            d="M402 168c-2.93 40.67-33.1 72-66 72s-63.12-31.32-66-72c-3-42.31 26.37-72 66-72s69 30.46 66 72z"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="32"
+                          />
+                          <path
+                            d="M336 304c-65.17 0-127.84 32.37-143.54 95.41-2.08 8.34 3.15 16.59 11.72 16.59h263.65c8.57 0 13.77-8.25 11.72-16.59C463.85 335.36 401.18 304 336 304z"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-miterlimit="10"
+                            stroke-width="32"
+                          />
+                          <path
+                            d="M200 185.94c-2.34 32.48-26.72 58.06-53 58.06s-50.7-25.57-53-58.06C91.61 152.15 115.34 128 147 128s55.39 24.77 53 57.94z"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="32"
+                          />
+                          <path
+                            d="M206 306c-18.05-8.27-37.93-11.45-59-11.45-52 0-102.1 25.85-114.65 76.2-1.65 6.66 2.53 13.25 9.37 13.25H154"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-miterlimit="10"
+                            stroke-width="32"
+                          />
+                        </svg>
+                        {{ item.guest }} Guests
+                      </p>
+                      <p class="card-text mb-0 mt-0 p-0">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          class="ionicon"
+                          viewBox="0 0 512 512"
+                        >
+                          <title>Bed</title>
+                          <path
+                            d="M384 240H96V136a40.12 40.12 0 0140-40h240a40.12 40.12 0 0140 40v104zM48 416V304a64.19 64.19 0 0164-64h288a64.19 64.19 0 0164 64v112"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="32"
+                          />
+                          <path
+                            d="M48 416v-8a24.07 24.07 0 0124-24h368a24.07 24.07 0 0124 24v8M112 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16M256 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="32"
+                          />
+                        </svg>
+                        {{ item.bed }} {{ item.roomType | titlecase }} bed
+                      </p>
+                    </div>
+                    <div
+                      class="d-flex justify-content-between align-items-center mt-2 mb-2"
+                    >
+                      <p
+                        class="card-text mb-0 mt-0 p-0 text-decoration-line-through text-opacity-75 text-secondary"
+                      >
+                        {{ item.normalRent | currency : "INR" : "symbol" }}
+                      </p>
+                      <p class="card-text mb-0 mt-0 p-0">
+                        {{ item.offRent | currency : "INR" : "symbol" }}
+                        / night
+                      </p>
+                    </div>
+                    <div class="d-flex px-3">
+                      <button
+                        class="btn btn-dark bg-gradient mx-auto w-75"
+                        data-bs-toggle="modal"
+                        data-bs-target="#detailModal"
+                        (click)="getRoomDetails(item.id)"
+                      >
+                        Get Details
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Error Message -->
+        <div class="col-12" *ngIf="isError">
+          <p class="mt-2 mt-md-3 mt-lg-4 p-2 text-center fs-3">
+            {{ errorMsg }}
+          </p>
+        </div>
+        <div class="col-12 h-100 mt-3 mb-5 mb-md-2 mb-lg-0" *ngIf="isLoading">
+          <div class="d-flex justify-content-center align-items-center h-100">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade modal-xl modal-xxl modal-lg modal-md modal-sm"
+  id="detailModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Room Details</h1>
+        <button
+          id="closeModal"
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- Spinner -->
+        <div
+          class="d-flex justify-content-center align-items-center h-100"
+          *ngIf="!modalShow"
+        >
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
+        <!-- Card -->
+        <div class="card mb-3 shadow" *ngIf="modalShow">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img
+                src="{{ userBooking.imgUrl }}"
+                class="img rounded-start"
+                alt="{{ userBooking.roomType }}_bed"
+                style="object-fit: cover; width: 100%; height: 100%"
+                priority
+              />
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title">{{ userBooking.roomName }}</h5>
+                <span class="text-dark">Complementary</span>
+                <p class="card-text ms-3 ms-md-4">
+                  {{ userBooking.complementary }}
+                </p>
+
+                <div class="d-flex justify-content-between align-items-center">
+                  <p class="card-text mb-0 mt-0 p-0">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="ionicon"
+                      viewBox="0 0 512 512"
+                    >
+                      <title>People</title>
+                      <path
+                        d="M402 168c-2.93 40.67-33.1 72-66 72s-63.12-31.32-66-72c-3-42.31 26.37-72 66-72s69 30.46 66 72z"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="32"
+                      />
+                      <path
+                        d="M336 304c-65.17 0-127.84 32.37-143.54 95.41-2.08 8.34 3.15 16.59 11.72 16.59h263.65c8.57 0 13.77-8.25 11.72-16.59C463.85 335.36 401.18 304 336 304z"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-miterlimit="10"
+                        stroke-width="32"
+                      />
+                      <path
+                        d="M200 185.94c-2.34 32.48-26.72 58.06-53 58.06s-50.7-25.57-53-58.06C91.61 152.15 115.34 128 147 128s55.39 24.77 53 57.94z"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="32"
+                      />
+                      <path
+                        d="M206 306c-18.05-8.27-37.93-11.45-59-11.45-52 0-102.1 25.85-114.65 76.2-1.65 6.66 2.53 13.25 9.37 13.25H154"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-miterlimit="10"
+                        stroke-width="32"
+                      />
+                    </svg>
+                    {{ userBooking.guest }} Guests
+                  </p>
+                  <p class="card-text mb-0 mt-0 p-0">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="ionicon"
+                      viewBox="0 0 512 512"
+                    >
+                      <title>Bed</title>
+                      <path
+                        d="M384 240H96V136a40.12 40.12 0 0140-40h240a40.12 40.12 0 0140 40v104zM48 416V304a64.19 64.19 0 0164-64h288a64.19 64.19 0 0164 64v112"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="32"
+                      />
+                      <path
+                        d="M48 416v-8a24.07 24.07 0 0124-24h368a24.07 24.07 0 0124 24v8M112 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16M256 240v-16a32.09 32.09 0 0132-32h80a32.09 32.09 0 0132 32v16"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="32"
+                      />
+                    </svg>
+                    {{ userBooking.bed }}
+                    {{ userBooking.roomType | titlecase }} bed
+                  </p>
+                </div>
+                <div
+                  class="d-flex justify-content-between align-items-center mt-2 mb-2"
+                >
+                  <p
+                    class="card-text mb-0 mt-0 p-0 text-decoration-line-through text-opacity-75 text-secondary"
+                  >
+                    {{ userBooking.normalRent | currency : "INR" : "symbol" }}
+                  </p>
+                  <p class="card-text mb-0 mt-0 p-0">
+                    {{ userBooking.offRent | currency : "INR" : "symbol" }}
+                    / night
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- price  -->
+        <div class="col-12 p-2">
+          <ul
+            class="list-unstyled border-1 p-2 d-flex align-items-center gap-3 flex-wrap shadow"
+          >
+            <li>Check In : {{ checkIn }}</li>
+            <li>Check Out : {{ checkOut }}</li>
+            <li>Adult : {{ adultsCount }}</li>
+            <li>Children : {{ childrensCount }}</li>
+            <li>Room : {{ roomCount }}</li>
+            <li>Total : {{ totalCost | currency : "INR" : "symbol" }}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <div class="d-flex justify-content-center align-items-center w-100">
+          
+        </div> -->
+        <button
+          type="button"
+          class="btn btn-secondary"
+          id="modalClose"
+          (click)="userBooking = ''"
+          data-bs-dismiss="modal"
+        >
+          Cancel
+        </button>
+        <button class="btn btn-dark bg-gradient ms-3" (click)="placeBooking()">
+          Book
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Alert -->
+<div class="col-12 px-3 col-md-6 mx-auto fixed-top mt-4">
+  <div
+    class="alert alert-warning alert-dismissible fade show"
+    role="alert"
+    tabindex="-1"
+    *ngIf="isAlert"
+  >
+    <strong>{{ alertTitle }}</strong
+    ><span class="w-100 text-center"> {{ alertMsg }}</span>
+    <button type="button" class="btn-close" (click)="alertDismiss()"></button>
+  </div>
+</div>

@@ -1,0 +1,119 @@
+nav {
+  transition: 300ms ease-in-out !important;
+  &.sticky-top {
+    animation: show 700ms ease-in-out !important;
+    animation: name duration timing-function delay iteration-count direction
+      fill-mode;
+    transition: 300ms ease-in-out !important;
+  }
+
+  div.navbar-collapse {
+    ul > li > a.roomBtn {
+      position: relative !important;
+      color: rgb(0, 0, 0) !important;
+      transition: 300ms;
+      padding: 0.3rem 0.8rem !important;
+      &::before {
+        content: "";
+        position: absolute !important;
+        top: 1.8rem;
+        left: 10%;
+        width: 10%;
+        height: 0.2rem;
+        transition: 300ms;
+      }
+      &:hover::before {
+        width: 60%;
+        background-color: black;
+      }
+    }
+    ul > li > a.nav-link {
+      position: relative !important;
+      color: rgb(0, 0, 0) !important;
+      transition: 300ms;
+      padding: 0.3rem 0.8rem !important;
+      &.active {
+        background-color: rgb(5, 84, 84) !important;
+        color: #fff !important;
+        border-radius: 0.5rem !important;
+      }
+      &:not(.dropdown-toggle):after {
+        content: "";
+        position: absolute !important;
+        top: 1.8rem;
+        left: 10%;
+        width: 10%;
+        height: 0.2rem;
+        transition: 300ms;
+      }
+      &:hover:not(.active, .dropdown-toggle)::after {
+        width: 60%;
+        background-color: black;
+      }
+    }
+  }
+}
+div.offcanvas {
+  div.offcanvas-body > ul > li {
+    a {
+      color: black !important;
+      transition: 300ms;
+      &.active {
+        background-color: rgb(5, 84, 84) !important;
+        color: #fff !important;
+        border-radius: 0.5rem;
+      }
+    }
+  }
+}
+
+.loginBtn {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  color: black;
+  position: relative;
+  padding: 0.2rem 0.8rem;
+  &:hover {
+    background-color: #9a9a9a3e;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0.2rem;
+    height: 100%;
+    background-color: black;
+  }
+}
+@keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+.modal-footer {
+  p > a {
+    cursor: pointer;
+  }
+}
+
+input {
+  background-color: #eaeaea65;
+  transition: 300ms;
+  &::placeholder {
+    padding-left: 1rem !important;
+    transition: 400ms;
+  }
+  &:focus::placeholder {
+    padding-left: 0.1rem !important;
+    color: #00000089 !important;
+  }
+}
+
+button[type="submit"]:disabled {
+  cursor: not-allowed !important;
+}

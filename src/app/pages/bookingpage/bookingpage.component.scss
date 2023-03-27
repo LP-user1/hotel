@@ -1,0 +1,29 @@
+.booking-banner {
+  background: linear-gradient(
+      to right,
+      rgba(41, 40, 40, 0.559),
+      rgba(39, 39, 39, 0.543)
+    ),
+    url("^assets/booking_page_banner.jpg");
+  height: 30vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transition: 400ms ease-in-out;
+  @media only screen and (min-width: 768px) {
+    height: 45vh;
+  }
+  &:hover {
+    @media only screen and (min-width: 768px) {
+      transform: scale(1.1);
+    }
+  }
+}
+.booking-outer {
+  overflow: hidden !important;
+}
+
+svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
