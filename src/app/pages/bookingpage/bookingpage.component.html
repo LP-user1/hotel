@@ -579,15 +579,6 @@
         ></button>
       </div>
       <div class="modal-body">
-        <!-- Spinner -->
-        <div
-          class="d-flex justify-content-center align-items-center h-100"
-          *ngIf="!modalShow"
-        >
-          <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div>
         <!-- Card -->
         <div class="card mb-3 shadow" *ngIf="modalShow">
           <div class="row g-0">
@@ -695,15 +686,25 @@
             </div>
           </div>
         </div>
+        <!-- Spinner -->
+        <div
+          class="d-flex justify-content-center align-items-center h-100"
+          *ngIf="!modalShow || bookingProcess"
+        >
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
         <!-- price  -->
         <div class="col-12 p-2">
           <ul
-            class="list-unstyled border-1 p-2 d-flex align-items-center gap-3 flex-wrap shadow"
+            class="list-unstyled border-1 p-3 d-flex align-items-center gap-3 flex-wrap shadow"
           >
             <li>Check In : {{ checkIn }}</li>
             <li>Check Out : {{ checkOut }}</li>
             <li>Adult : {{ adultsCount }}</li>
             <li>Children : {{ childrensCount }}</li>
+            <li>Total Stay Days : {{ totalDays }}</li>
             <li>Room : {{ roomCount }}</li>
             <li>Total : {{ totalCost | currency : "INR" : "symbol" }}</li>
           </ul>
@@ -722,7 +723,7 @@
         >
           Cancel
         </button>
-        <button class="btn btn-dark bg-gradient ms-3" (click)="placeBooking()">
+        <button class="btn btn-dark bg-gradient ms-3" [disabled]="bookingProcess" (click)="placeBooking()">
           Book
         </button>
       </div>

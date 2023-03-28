@@ -35,6 +35,9 @@ export class BookingpageComponent implements OnInit {
   isEnableDate: boolean = false;
   todayDate: any;
   totalCost!: number;
+  bookingProcess:boolean=false;
+  totalDays!:number;
+
 
   constructor(
     public _roomService: RoomsService,
@@ -50,6 +53,9 @@ export class BookingpageComponent implements OnInit {
     //   });
     //   console.log(data);
     // });
+    if(this._authService.isLoggedIn()){
+      this._authService.userId = localStorage.getItem('Uid')
+    }
   }
   getDataFromService() {
     this.isLoading = true;
@@ -107,7 +113,16 @@ export class BookingpageComponent implements OnInit {
     this.userBooking = this.roomsArr.find(
       (room) => room.id === id && room.roomStatus === 'available'
     );
-    this.totalCost = this.roomCount * this.userBooking.offRent;
+    if(this.checkIn && this.checkOut){
+      const checkinDate:any=new Date(`${this.checkIn} 10:00:00`);
+      const checkoutDate:any=new Date(`${this.checkOut} 12:00:00`)
+      const diff:any =checkoutDate - checkinDate;
+      this.totalDays = Math.floor(diff/1000/60/60/24)
+      console.log(this.totalDays);
+      this.totalCost = this.roomCount * this.userBooking.offRent * this.totalDays;
+    }else{
+      this.totalCost = this.roomCount * this.userBooking.offRent;
+    }
     if (!this.userBooking) {
       this.isAlert = true;
       this.alertMsg = 'Currently this room not Available';
@@ -118,19 +133,24 @@ export class BookingpageComponent implements OnInit {
   placeBooking() {
     if (this._authService.isLoggedIn()) {
       if (this.checkIn && this.checkOut) {
+        if(this.checkOut > this.checkIn){
+          const date:any= new Date(Date.now()).toLocaleString();
+        this.bookingProcess = true;
         this.userBooked = [];
         this.userBooked = {
           ...this.userBooking,
           ...{
+            bookedDateTime:date,
+            totalStay:this.totalDays,
             checkin: this.checkIn,
             checkout: this.checkOut,
             roomcount: this.roomCount,
-            totalPrice: this.roomCount * this.userBooking.offRent,
+            totalPrice: this.totalCost,
+            userId: this._authService.userId,
             guest: {
               adult: this.adultsCount,
               children: this.childrensCount,
             },
-            userId: this._authService.userId,
           },
         };
         this._dataApi
@@ -138,6 +158,7 @@ export class BookingpageComponent implements OnInit {
           .then((res: any) => {
             console.log(res);
             if (res) {
+              this.bookingProcess = false;
               document.getElementById('closeModal')?.click();
               this.isAlert = true;
               this.alertTitle = 'Success';
@@ -145,11 +166,18 @@ export class BookingpageComponent implements OnInit {
             }
           })
           .catch((err:any) => {
+            this.bookingProcess = false;
             document.getElementById('closeModal')?.click();
             this.isAlert = true;
             this.alertTitle = 'Error';
             this.alertMsg = err.message;
           });
+        }else{
+          document.getElementById('closeModal')?.click();
+        this.isAlert = true;
+        this.alertTitle = 'INFO';
+        this.alertMsg = 'Checkout date must greater than Checkin.';
+        }
       } else {
         document.getElementById('closeModal')?.click();
         this.isAlert = true;
@@ -168,7 +196,14 @@ export class BookingpageComponent implements OnInit {
     this.isEnableDate = true;
   }
   checkoutDatePicker(val: any) {
-    this.checkOut = val.target.value;
+    if(val.target.value > this.checkIn){
+      this.checkOut = val.target.value;
+    }else{
+      this.isAlert = true;
+      this.alertTitle = 'INFO';
+      this.alertMsg = 'Checkout date must greater than checkin.';
+    }
+
   }
   checkoutAlert() {
     if (!this.isEnableDate) {
@@ -179,7 +214,7 @@ export class BookingpageComponent implements OnInit {
   }
   // --------- Filtering --------
   getFilter() {
-    if (this.checkIn !== 0 && this.checkOut !== 0) {
+    if (this.checkIn && this.checkOut) {
       // ********** Single **************
       if (this.roomtype === 'single') {
         if (this.adultsCount + this.childrensCount <= 2) {

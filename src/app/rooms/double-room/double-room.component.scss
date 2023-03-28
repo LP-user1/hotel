@@ -1,6 +1,9 @@
 .double-banner {
   height: 35vh;
+  background: rgb(76, 195, 194);
+  background: linear-gradient(90deg, rgba(76, 195, 194, 1) 7%, rgba(168, 255, 197, 1) 100%);
 }
+
 svg {
   width: 1.5rem !important;
   height: 1.5rem !important;

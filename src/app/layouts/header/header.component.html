@@ -265,7 +265,7 @@
         </div>
         <!-- Sign up form -->
         <form
-          class="p-4"
+          class="p-2"
           *ngIf="!loginFormActive"
           [formGroup]="signUpForm"
           (ngSubmit)="signUpFormSubmit()"
@@ -331,7 +331,9 @@
           </div>
           <div class="mb-3">
             <label for="confpassword" class="form-label"
-              >Confirm Password</label
+              >Confirm Password <span class="text-danger" *ngIf="PassMatchError"
+              ><small>* password does not match.</small></span
+            ></label
             >
             <input
               type="password"
@@ -359,7 +361,7 @@
         </form>
         <!-- Login Form -->
         <form
-          class="p-4"
+          class="p-2"
           *ngIf="loginFormActive"
           [formGroup]="loginForm"
           (ngSubmit)="loginFormSubmit()"

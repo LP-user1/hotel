@@ -11,6 +11,7 @@ export class RoomsService implements OnInit {
   constructor() {}
   ngOnInit(): void {}
   getAllRoomsData(): any[] {
+    
     this.allRooms = [
       {
         id: 0,

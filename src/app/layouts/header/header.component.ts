@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataApiService } from 'src/app/services/data-api.service';
+import {customValidator} from './customvalidator';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -67,7 +68,7 @@ export class HeaderComponent implements OnInit {
         Validators.required,
         Validators.minLength(8),
       ]),
-    });
+    },[customValidator.MatchValidator('password','confpassword')]);
   }
   // ,{
   //   validators: [Validation.match('password', 'confirmPassword')]
@@ -91,8 +92,8 @@ export class HeaderComponent implements OnInit {
           // this.userId = res.user.uid;
           const token = res.user.accessToken;
           this._authService.userId = res.user.uid;
+          localStorage.setItem('Uid',this._authService.userId);
           localStorage.setItem('Token', token);
-          this.route.navigate(['/']);
           this.isLoading = false;
           this.isLoggedin = true;
           document.getElementById('modalClose')?.click();
@@ -178,6 +179,9 @@ export class HeaderComponent implements OnInit {
   get confpassword() {
     return this.signUpForm.get('confpassword');
   }
+  get PassMatchError(){
+    return (this.signUpForm.getError('mismatch') && this.signUpForm.get('confpassword')?.touched);
+  }
   alertDismiss() {
     this.isAlert = false;
   }
@@ -185,7 +189,9 @@ export class HeaderComponent implements OnInit {
     this._authService
       .logoutUser()
       .then(() => {
+        this.route.navigate(['/']);
         localStorage.removeItem('Token');
+        localStorage.removeItem('Uid');
         this.isLoggedin = false;
         this.isAlert = true;
         this.alertTitle = 'Success';

@@ -12,6 +12,8 @@ export class ContactpageComponent implements OnInit {
   isAlert: boolean = false;
   alertTitle!: string;
   alertMsg!: string;
+  contactProcess:boolean=false;
+
   constructor(private _DataApi: DataApiService) {}
   ngOnInit(): void {
     this.userForm = new FormGroup({
@@ -28,19 +30,24 @@ export class ContactpageComponent implements OnInit {
     });
   }
   userSubmit() {
-    this._DataApi
+    if(this.userForm.valid){
+      this.contactProcess = true;
+      this._DataApi
       .storeContactMails(this.userForm.value)
       .then((res) => {
+        this.contactProcess = false;
         this.isAlert = true;
         this.alertTitle = 'Success';
         this.alertMsg =
           'Message has been sent successfully. We will respond back as soon as possible.';
       })
       .catch((err) => {
+        this.contactProcess = false;
         this.isAlert = true;
         this.alertTitle = 'Error';
         this.alertMsg = 'Failed to send. Try again!';
       });
+    }
     this.userForm.reset();
   }
   alertDismiss() {

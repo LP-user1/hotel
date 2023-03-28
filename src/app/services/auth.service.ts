@@ -10,7 +10,7 @@ import {
   providedIn: 'root',
 })
 export class AuthService implements OnInit {
-  userId!: string;
+  userId!: any;
   isLoading: boolean = false;
   isUserLoggedIn: boolean = false;
   message!: string;
